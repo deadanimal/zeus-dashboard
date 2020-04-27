@@ -52,9 +52,18 @@ export const ROUTES: RouteInfo[] = [
     isCollapsed: true,
     children: [
       { path: "account", title: "Account", type: "link" },
-      { path: "bot", title: "Bot", type: "link" },
+      { path: "appliance", title: "Appliance", type: "link" },
+      { path: "bill", title: "Bill", type: "link" },
+      { path: "building", title: "Building", type: "link" },
+      { path: "device", title: "Device", type: "link" },
       { path: "gateway", title: "Gateway", type: "link" },
-      { path: "sensor", title: "Sensor", type: "link" },
+      { path: "goal", title: "Goal", type: "link" },
+      { path: "notification", title: "Notification", type: "link" },
+      { path: "organisation", title: "Organisation", type: "link" },
+      { path: "plant", title: "Plant", type: "link" },
+      { path: "report", title: "Report", type: "link" },
+      { path: "ticket", title: "Ticket", type: "link" },
+      { path: "user", title: "User", type: "link" },
     ]
   }, 
 

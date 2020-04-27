@@ -13,17 +13,9 @@ import { AccountDetailComponent } from './account/account-detail.component';
 import { AccountNewComponent } from './account/account-new.component';
 import { AccountComponent } from "./account/account.component";
 
-import { BotDetailComponent } from "./bot/bot-detail.component";
-import { BotNewComponent } from "./bot/bot-new.component";
-import { BotComponent } from "./bot/bot.component";
-
 import { GatewayDetailComponent } from './gateway/gateway-detail.component';
 import { GatewayNewComponent } from "./gateway/gateway-new.component";
 import { GatewayComponent } from "./gateway/gateway.component";
-
-import { SensorDetailComponent } from "./sensor/sensor-detail.component";
-import { SensorNewComponent } from "./sensor/sensor-new.component";
-import { SensorComponent } from "./sensor/sensor.component";
 
 import { RouterModule } from "@angular/router";
 import { DatabasesRoutes } from "./databases.routing";
@@ -34,17 +26,9 @@ let componentList = [
   AccountNewComponent,
   AccountComponent,
 
-  BotDetailComponent,
-  BotNewComponent,
-  BotComponent,
-
   GatewayDetailComponent,
   GatewayNewComponent,
   GatewayComponent,
-  
-  SensorDetailComponent,
-  SensorNewComponent,
-  SensorComponent,
 ]
 
 @NgModule({
