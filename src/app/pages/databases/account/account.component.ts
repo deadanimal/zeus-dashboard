@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Account } from '../../../models/account.model';
 import { AccountService } from '../../../services/account.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-account",
@@ -26,13 +27,12 @@ export class AccountComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private accountService: AccountService) {
    
 
@@ -99,16 +99,21 @@ export class AccountComponent implements OnInit {
   }  
 
   getAllAccounts() {
+
+    this.spinner.show();
+
     this.accountService.getAccounts().subscribe(
       (data) => {
         this.accountService.accounts = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.accounts = this.accountService.accounts;
         this.temp = this.accounts;
+        this.spinner.hide();
       }
     )    
   }

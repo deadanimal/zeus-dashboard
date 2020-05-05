@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Gateway } from '../../../models/gateway.model';
 import { GatewayService } from '../../../services/gateway.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-gateway",
@@ -26,13 +27,12 @@ export class GatewayComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private gatewayService: GatewayService) {
    
 
@@ -99,18 +99,24 @@ export class GatewayComponent implements OnInit {
   }  
 
   getAllGateways() {
+
+    this.spinner.show();
+
     this.gatewayService.getGateways().subscribe(
       (data) => {
         this.gatewayService.gateways = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.gateways = this.gatewayService.gateways;
         this.temp = this.gateways;
+        this.spinner.hide();
       }
-    )    
+    )  
+      
   }
 
   moveTo(link) {

@@ -33,11 +33,17 @@ export interface ChildrenItems2 {
 export const ROUTES: RouteInfo[] = [
   {
     path: "/dashboards",
-    title: "Dashboards",
+    title: "Dashboard",
     type: "sub",
     icontype: "ni-chart-pie-35 text-primary",
     isCollapsed: true,
     children: [
+      { path: "dashboard", title: "Finance", type: "link" },
+      { path: "dashboard", title: "Generation", type: "link" },
+      { path: "dashboard", title: "Demand", type: "link" },
+      { path: "dashboard", title: "Grid", type: "link" },
+
+
       { path: "dashboard", title: "Dashboard", type: "link" },
       { path: "alternative", title: "Alternative", type: "link" },
       { path: "radar", title: "Radar", type: "link" }
@@ -66,6 +72,30 @@ export const ROUTES: RouteInfo[] = [
       { path: "user", title: "User", type: "link" },
     ]
   }, 
+  {
+    path: "/dashboards/radar",
+    title: "Maintenance",
+    type: "link",
+    icontype: "ni-settings text-info",
+  },      
+  {
+    path: "/dashboards/dasboard",
+    title: "GIS",
+    type: "link",
+    icontype: "ni-square-pin text-warning",
+  },    
+  {
+    path: "/dashboards/alternative",
+    title: "Sales",
+    type: "link",
+    icontype: "ni-shop text-success",
+  },    
+  {
+    path: "/dashboards/radar",
+    title: "Support",
+    type: "link",
+    icontype: "ni-support-16 text-danger",
+  },  
 
 ];
 

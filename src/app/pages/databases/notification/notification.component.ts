@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Notification } from '../../../models/notification.model';
 import { NotificationService } from '../../../services/notification.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-notification",
@@ -26,13 +27,12 @@ export class NotificationComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private notificationService: NotificationService) {
    
 
@@ -99,16 +99,21 @@ export class NotificationComponent implements OnInit {
   }  
 
   getAllNotifications() {
+
+    this.spinner.show();
+
     this.notificationService.getNotifications().subscribe(
       (data) => {
         this.notificationService.notifications = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.notifications = this.notificationService.notifications;
         this.temp = this.notifications;
+        this.spinner.hide();
       }
     )    
   }

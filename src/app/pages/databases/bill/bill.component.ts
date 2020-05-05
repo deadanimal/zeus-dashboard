@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Bill } from '../../../models/bill.model';
 import { BillService } from '../../../services/bill.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-bill",
@@ -26,13 +27,12 @@ export class BillComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private billService: BillService) {
    
 
@@ -99,16 +99,21 @@ export class BillComponent implements OnInit {
   }  
 
   getAllBills() {
+
+    this.spinner.show();
+
     this.billService.getBills().subscribe(
       (data) => {
         this.billService.bills = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.bills = this.billService.bills;
         this.temp = this.bills;
+        this.spinner.hide();
       }
     )    
   }

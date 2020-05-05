@@ -3,6 +3,10 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
+import * as L from 'leaflet';
+import { latLng, tileLayer } from 'leaflet';
+import { Map as LeafletMap} from 'leaflet';
+
 import { Building } from '../../../models/building.model';
 import { BuildingService } from '../../../services/building.service';
 
@@ -14,6 +18,8 @@ export class BuildingDetailComponent implements OnInit {
   
   building: Building;
   _id: string;
+
+  public map: LeafletMap;
 
   buildingForm: any = {};
   loading = false;
@@ -37,6 +43,8 @@ export class BuildingDetailComponent implements OnInit {
     } else {
       this.buildingForm = this.building;
     }
+
+    this.initialiseMap();
 
     var navbar = document.getElementsByClassName("navbar-top")[0];
     navbar.classList.add("bg-secondary");
@@ -96,7 +104,11 @@ export class BuildingDetailComponent implements OnInit {
     )        
   }
 
-
+  initialiseMap() {
+  
+    this.map = L.map("map").setView(latLng([ 4.105369348495166, 102.315673828125 ]), 7);
+     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {}).addTo(this.map);    
+   }
 
 
 }

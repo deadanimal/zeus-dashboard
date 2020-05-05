@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Device } from '../../../models/device.model';
 import { DeviceService } from '../../../services/device.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-device",
@@ -26,13 +27,12 @@ export class DeviceComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private deviceService: DeviceService) {
    
 
@@ -99,16 +99,21 @@ export class DeviceComponent implements OnInit {
   }  
 
   getAllDevices() {
+
+    this.spinner.show();
+
     this.deviceService.getDevices().subscribe(
       (data) => {
         this.deviceService.devices = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.devices = this.deviceService.devices;
         this.temp = this.devices;
+        this.spinner.hide();
       }
     )    
   }

@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Goal } from '../../../models/goal.model';
 import { GoalService } from '../../../services/goal.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-goal",
@@ -26,13 +27,12 @@ export class GoalComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private goalService: GoalService) {
    
 
@@ -99,18 +99,24 @@ export class GoalComponent implements OnInit {
   }  
 
   getAllGoals() {
+
+    this.spinner.show();
+
     this.goalService.getGoals().subscribe(
       (data) => {
         this.goalService.goals = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.goals = this.goalService.goals;
         this.temp = this.goals;
+        this.spinner.hide();
       }
-    )    
+    )  
+
   }
 
   moveTo(link) {

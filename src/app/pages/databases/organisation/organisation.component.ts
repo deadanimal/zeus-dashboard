@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Organisation } from '../../../models/organisation.model';
 import { OrganisationService } from '../../../services/organisation.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-organisation",
@@ -26,13 +27,12 @@ export class OrganisationComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private organisationService: OrganisationService) {
    
 
@@ -99,16 +99,21 @@ export class OrganisationComponent implements OnInit {
   }  
 
   getAllOrganisations() {
+
+    this.spinner.show();
+
     this.organisationService.getOrganisations().subscribe(
       (data) => {
         this.organisationService.organisations = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.organisations = this.organisationService.organisations;
         this.temp = this.organisations;
+        this.spinner.hide();
       }
     )    
   }

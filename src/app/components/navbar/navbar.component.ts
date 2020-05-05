@@ -112,4 +112,9 @@ export class NavbarComponent implements OnInit {
       this.sidenavOpen = true;
     }
   }
+
+  logout() {
+    this.router.navigateByUrl('/');
+  }
+
 }

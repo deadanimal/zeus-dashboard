@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Plant } from '../../../models/plant.model';
 import { PlantService } from '../../../services/plant.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-plant",
@@ -26,13 +27,12 @@ export class PlantComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private plantService: PlantService) {
    
 
@@ -99,18 +99,24 @@ export class PlantComponent implements OnInit {
   }  
 
   getAllPlants() {
+    
+    this.spinner.show();
+
     this.plantService.getPlants().subscribe(
       (data) => {
         this.plantService.plants = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.plants = this.plantService.plants;
         this.temp = this.plants;
+        this.spinner.hide();
       }
-    )    
+    )   
+
   }
 
   moveTo(link) {

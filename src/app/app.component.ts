@@ -28,4 +28,9 @@ export class AppComponent {
          }
      });
    }
+
+   ngOnInit() {
+     console.log('init');
+   }
+
 }

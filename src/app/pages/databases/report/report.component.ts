@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Report } from '../../../models/report.model';
 import { ReportService } from '../../../services/report.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-report",
@@ -26,13 +27,12 @@ export class ReportComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private reportService: ReportService) {
    
 
@@ -99,18 +99,24 @@ export class ReportComponent implements OnInit {
   }  
 
   getAllReports() {
+
+    this.spinner.show();
+
     this.reportService.getReports().subscribe(
       (data) => {
         this.reportService.reports = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.reports = this.reportService.reports;
         this.temp = this.reports;
+        this.spinner.hide();
       }
     )    
+
   }
 
   moveTo(link) {

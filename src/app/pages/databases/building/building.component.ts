@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Building } from '../../../models/building.model';
 import { BuildingService } from '../../../services/building.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-building",
@@ -26,13 +27,12 @@ export class BuildingComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private buildingService: BuildingService) {
    
 
@@ -99,16 +99,21 @@ export class BuildingComponent implements OnInit {
   }  
 
   getAllBuildings() {
+
+    this.spinner.show();
+
     this.buildingService.getBuildings().subscribe(
       (data) => {
         this.buildingService.buildings = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.buildings = this.buildingService.buildings;
         this.temp = this.buildings;
+        this.spinner.hide();
       }
     )    
   }

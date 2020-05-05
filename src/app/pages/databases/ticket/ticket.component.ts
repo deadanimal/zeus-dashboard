@@ -13,6 +13,7 @@ export enum SelectionType {
 
 import { Ticket } from '../../../models/ticket.model';
 import { TicketService } from '../../../services/ticket.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-database-ticket",
@@ -26,13 +27,12 @@ export class TicketComponent implements OnInit {
   selected: any[] = [];
   temp = [];
   activeRow: any;
-  rows: any = [
-    {'name': 'name'}
-  ]
+  rows: any = []
   SelectionType = SelectionType;
 
   constructor(        
     public router: Router,
+    private spinner: NgxSpinnerService,
     private ticketService: TicketService) {
    
 
@@ -99,18 +99,24 @@ export class TicketComponent implements OnInit {
   }  
 
   getAllTickets() {
+
+    this.spinner.show();
+
     this.ticketService.getTickets().subscribe(
       (data) => {
         this.ticketService.tickets = data;
       },
       (error) => {
         console.log(error);
+        this.spinner.hide();
       },
       () => {
         this.tickets = this.ticketService.tickets;
         this.temp = this.tickets;
+        this.spinner.hide();
       }
     )    
+
   }
 
   moveTo(link) {
